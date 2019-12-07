@@ -178,6 +178,7 @@ public class managerController extends GoTo {
         ObservableList<Produkty> data2 = FXCollections.observableArrayList();
 
         data2.addAll(l);
+        //sss
         T_modyfikacja.setItems(data2);
     }
 }
