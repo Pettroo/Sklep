@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="pane1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.logowanieController">
+   <children>
+      <Button layoutX="409.0" layoutY="236.0" mnemonicParsing="false" onAction="#zaloguj" text="Zaloguj się" />
+      <PasswordField layoutX="372.0" layoutY="188.0" />
+      <TextField fx:id="nazwaU" layoutX="372.0" layoutY="150.0" />
+      <Label layoutX="400.0" layoutY="292.0" text="Nie masz konta?" />
+      <Label layoutX="419.0" layoutY="110.0" text="Logowanie" />
+      <Label layoutX="323.0" layoutY="155.0" text="Login:" textAlignment="RIGHT" />
+      <Label layoutX="326.0" layoutY="193.0" text="Hasło:" textAlignment="JUSTIFY" />
+      <Button layoutX="351.0" layoutY="326.0" mnemonicParsing="false" onAction="#rejestracja" text="Rejestracja" textAlignment="CENTER" />
+      <Button layoutX="442.0" layoutY="326.0" mnemonicParsing="false" onAction="#przegladanie" text="Przeglądaj bez konta" textAlignment="CENTER" />
+      
+   </children>
+</Pane>
