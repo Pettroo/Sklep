@@ -24,26 +24,25 @@ public class GoTo {
         Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         app_stage.setScene(actual_scene);
     }
-
-    public void goToZamowieniaFromPracownik(ActionEvent actionEvent, String adres, Zamowienia z,pracownikController con)  {
+    public void goToUzywkownicy(ActionEvent actionEvent, String adres,String name)  {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource(adres));
-
-        zamowienieController controler=new zamowienieController(z,con);
-
-        loader.setController(controler);
-
-
         Pane pane = null;
         try {
             pane = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        uzytkownikController c=loader.getController();
+        c.setLogin(name);
+
 
         Scene actual_scene = new Scene(pane);
         Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         app_stage.setScene(actual_scene);
     }
+
+
+
 
 
 }

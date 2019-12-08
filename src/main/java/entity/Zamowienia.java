@@ -1,10 +1,6 @@
 package entity;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Spinner;
-
 import java.util.Date;
 
 public class Zamowienia {
@@ -24,8 +20,9 @@ public class Zamowienia {
         this.numerZ = numerZ;
     }
 
-    public Date getData() {
-        return data;
+    public String getData() {
+        String formattedDate = String.format("%1$te/%1$tm/%1$tY", data);
+        return formattedDate;
     }
 
     public void setData(Date data) {
@@ -72,18 +69,24 @@ public class Zamowienia {
         this.zaznacz = zaznacz;
     }
 
-    @Override
-    public String toString() {
-        return "Zamowienia{" +
-                "numerZ=" + numerZ +
-                ", data=" + data +
-                ", login='" + login + '\'' +
-                ", imie='" + imie + '\'' +
-                ", nazwisko='" + nazwisko + '\'' +
-                ", status='" + status + '\'' +
-                '}';
-    }
 
+    public String toString1() {
+        return
+                "Numer: " + numerZ +"\n"+
+                "Data: " + String.format("%1$te/%1$tm/%1$tY", data) +"\n"+
+                "login: " + login +"\n"+
+                "Imię: " + imie +"\n"+
+                "Nazwisko: " + nazwisko +"\n"+
+                "Status: " + status
+                ;
+    }
+    public String toString2() {
+        return
+                "Numer: " + numerZ +"\n"+
+                "Data: " + String.format("%1$te/%1$tm/%1$tY", data) +"\n"+
+                "Status: " + status
+                ;
+    }
     public Zamowienia(int numerZ, Date data, String login, String imie, String nazwisko, String status) {
         this.numerZ = numerZ;
         this.data = data;
@@ -91,7 +94,7 @@ public class Zamowienia {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.status = status;
-        this.zaznacz=new CheckBox();
+        this.zaznacz = new CheckBox();
     }
 
     public Zamowienia(int numerZ, Date data, String status) {

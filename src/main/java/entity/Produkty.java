@@ -18,6 +18,15 @@ public class Produkty {
     private Spinner ilosc;
     private ComboBox rozmiar;
     private CheckBox zaznacz;
+    private ComboBox status;
+
+    public ComboBox getStatus() {
+        return status;
+    }
+
+    public void setStatus(ComboBox status) {
+        this.status = status;
+    }
 
     public Produkty() {
 
@@ -36,6 +45,8 @@ public class Produkty {
         this.ilosc = new Spinner(1, 10, 1);
         this.rozmiar = new ComboBox();
         this.zaznacz = new CheckBox();
+        this.status = new ComboBox();
+
     }
 
     public int getId() {

@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Date;
@@ -16,11 +17,9 @@ public class pracownikController extends GoTo{
 
     @FXML
     private TableView T_zamowienia;
+    @FXML
+    private TextArea text;
 
-    public pracownikController() {
-        //System.out.println("pracownik konstructor" +this);
-
-    }
 
     final ObservableList<Zamowienia> data3 = FXCollections.observableArrayList(
             new Zamowienia(1, new Date(2011,2,14),"Ad","Adam","Kowasli","Zrealizowane"),
@@ -28,12 +27,12 @@ public class pracownikController extends GoTo{
     );
 
     public void initialize(){
-       // System.out.println("pracownik Initialize"+this);
+
         TableColumn numer = new TableColumn("Numer zamówienia");
         TableColumn datA = new TableColumn("Data");
-        TableColumn login = new TableColumn("Status");
-        TableColumn imie = new TableColumn("Status");
-        TableColumn nazwisko = new TableColumn("Status");
+        TableColumn login = new TableColumn("Login");
+        TableColumn imie = new TableColumn("Imię");
+        TableColumn nazwisko = new TableColumn("Nazwisko");
 
         TableColumn status = new TableColumn("Status");
         TableColumn zaznacz = new TableColumn("Zaznacz");
@@ -93,9 +92,7 @@ public class pracownikController extends GoTo{
     }
 
     public void szczegoly(ActionEvent actionEvent) {
-
         Zamowienia z=(Zamowienia) T_zamowienia.getSelectionModel().getSelectedItem();
-        if(z!=null)
-            goToZamowieniaFromPracownik(actionEvent,"/FXML/zamowienie.fxml",z,this);
+        if(z!=null) text.setText(z.toString1());
     }
 }

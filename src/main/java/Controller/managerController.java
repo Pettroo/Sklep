@@ -1,5 +1,6 @@
 package Controller;
 
+import entity.Zamowienia;
 import entity.pracownicy;
 import entity.Produkty;
 import javafx.collections.FXCollections;
@@ -24,10 +25,16 @@ public class managerController extends GoTo {
     @FXML
     private TableView T_modyfikacja;
     @FXML
+    private TableView T_dostepmosc;
+    @FXML
     private TextField nazwa_input;
-
     @FXML
     private TextField cena_input;
+    @FXML
+    private TextField nazwa_modyfikacja;
+    @FXML
+    private TextField cena_modyfikacja;
+
     Configuration conf=new Configuration().configure();
     SessionFactory factory=conf.buildSessionFactory();
     Session s=factory.openSession();
@@ -115,7 +122,7 @@ public class managerController extends GoTo {
         //---------------------------------------------//
 
 
-       List<Produkty> l=s.createQuery("SELECT p FROM Produkty p",Produkty.class).getResultList();
+        List<Produkty> l=s.createQuery("SELECT p FROM Produkty p",Produkty.class).getResultList();
 
         ObservableList<Produkty> data2 = FXCollections.observableArrayList();
 
@@ -141,17 +148,46 @@ public class managerController extends GoTo {
 
         T_modyfikacja.setItems(data2);
 
+    //-------------//
+        TableColumn name3 = new TableColumn("Nazwa");
+        TableColumn cena3 = new TableColumn("Cena");
+        TableColumn rozmiar = new TableColumn("Rozmiar");
+        TableColumn status = new TableColumn("Status");
 
+
+        T_dostepmosc.getColumns().addAll(name3, cena3, rozmiar,status);
+        name3.setCellValueFactory(
+                new PropertyValueFactory<Produkty, String>("nazwa")
+        );
+
+        cena3.setCellValueFactory(
+                new PropertyValueFactory<Produkty, String>("cena")
+        );
+
+
+        rozmiar.setCellValueFactory(
+                new PropertyValueFactory<Produkty, ComboBox>("rozmiar")
+        );
+
+        status.setCellValueFactory(
+                new PropertyValueFactory<Produkty, ComboBox>("status")
+        );
     }
 
 
-   
 
-    public void modyfikuj(ActionEvent actionEvent) {
+
+    public void zapisz_modyfikacja(ActionEvent actionEvent) {
 
     }
 
     public void modyfikacja(ActionEvent actionEvent) {
+        Produkty p=(Produkty) T_modyfikacja.getSelectionModel().getSelectedItem();
+        if(p!=null) {
+            nazwa_modyfikacja.setText(p.getNazwa());
+            String s=""+p.getCena();
+            cena_modyfikacja.setText(s);
+        }
 
     }
 
@@ -169,16 +205,28 @@ public class managerController extends GoTo {
 
     }
 
-    public void zapisz(ActionEvent actionEvent) {
+    public void zapisz_uprawnienia(ActionEvent actionEvent) {
     }
 
     public void tab_modyfikacja(Event event) {
         List<Produkty> l=s.createQuery("SELECT p FROM Produkty p",Produkty.class).getResultList();
-
         ObservableList<Produkty> data2 = FXCollections.observableArrayList();
-
         data2.addAll(l);
-        //sss
         T_modyfikacja.setItems(data2);
+    }
+
+    public void tab_dostepnosc(Event event) {
+
+        final ObservableList<Produkty> data = FXCollections.observableArrayList(
+                new Produkty("Adidasy", 23.50),
+                new Produkty("Sandały", 70.60),
+                new Produkty("Kozaki", 230.99)
+        );
+
+
+
+
+        T_dostepmosc.setItems(data);
+
     }
 }
