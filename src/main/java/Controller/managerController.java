@@ -20,6 +20,8 @@ import static java.lang.Double.parseDouble;
 
 public class managerController extends GoTo {
 
+    private String login;
+
     @FXML
     private TableView T_pracownicy;
     @FXML
@@ -45,6 +47,7 @@ public class managerController extends GoTo {
 
 
     public void initialize() {
+        System.out.println(login);
         TableColumn imie = new TableColumn("Imię");
         TableColumn nazwisko = new TableColumn("Nazwisko");
         TableColumn login = new TableColumn("Login");
@@ -228,5 +231,13 @@ public class managerController extends GoTo {
 
         T_dostepmosc.setItems(data);
 
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

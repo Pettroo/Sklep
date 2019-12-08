@@ -7,16 +7,16 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.uzytkownikController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
 <children>
     <TabPane prefHeight="450.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab text="Oferta sklepu">
+            <Tab onSelectionChanged="#tab_oferta" text="Oferta sklepu">
                 <content>
                     <TableView fx:id="T_produkty" prefHeight="411.0" prefWidth="900.0" />
                 </content>
             </Tab>
-            <Tab text="Koszyk">
+            <Tab onSelectionChanged="#tab_koszyk" text="Koszyk">
                 <content>
                     <Pane prefHeight="200.0" prefWidth="200.0">
                         <children>
@@ -29,7 +29,7 @@
                     </Pane>
                 </content>
             </Tab>
-            <Tab text="Złożone zamówienia">
+            <Tab onSelectionChanged="#tab_zamowienia" text="Złożone zamówienia">
                 <Pane prefHeight="200.0" prefWidth="200.0">
                     <children>
                         <Button layoutX="813.0" layoutY="198.0" mnemonicParsing="false" onAction="#szczegoly" text="Szczegóły" />

@@ -15,6 +15,8 @@ import java.util.Date;
 
 public class pracownikController extends GoTo{
 
+    private String login;
+
     @FXML
     private TableView T_zamowienia;
     @FXML
@@ -27,6 +29,7 @@ public class pracownikController extends GoTo{
     );
 
     public void initialize(){
+        System.out.println(login);
 
         TableColumn numer = new TableColumn("Numer zamówienia");
         TableColumn datA = new TableColumn("Data");
@@ -94,5 +97,13 @@ public class pracownikController extends GoTo{
     public void szczegoly(ActionEvent actionEvent) {
         Zamowienia z=(Zamowienia) T_zamowienia.getSelectionModel().getSelectedItem();
         if(z!=null) text.setText(z.toString1());
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

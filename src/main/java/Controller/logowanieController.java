@@ -30,8 +30,8 @@ public class logowanieController extends GoTo {
         }
 
         if (nazwaU.getText().equals("a") && password.getText().equals("a")) goToUzywkownicy(actionEvent, "/FXML/uzytkownik.fxml","a");
-        if (nazwaU.getText().equals("b") && password.getText().equals("b")) goTo(actionEvent, "/FXML/pracownik.fxml");
-        if (nazwaU.getText().equals("c") && password.getText().equals("c")) goTo(actionEvent, "/FXML/manager.fxml");
+        if (nazwaU.getText().equals("b") && password.getText().equals("b")) goToPracownik(actionEvent, "/FXML/pracownik.fxml","b");
+        if (nazwaU.getText().equals("c") && password.getText().equals("c")) goToManager(actionEvent, "/FXML/manager.fxml","c");
 
 
     }
