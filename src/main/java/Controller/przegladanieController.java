@@ -1,6 +1,7 @@
 package Controller;
 
 import entity.Produkty;
+import entity.Shoes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,7 +33,7 @@ public class przegladanieController extends GoTo {
         SessionFactory factory=conf.buildSessionFactory();
         Session s=factory.openSession();
 
-        List<Produkty> l=s.createQuery("SELECT p FROM Produkty p",Produkty.class).getResultList();
+        List<Produkty> l=s.createQuery("SELECT p FROM Produkty p", Produkty.class).getResultList();
         ObservableList<Produkty> data = FXCollections.observableArrayList();
 
         data.addAll(l);

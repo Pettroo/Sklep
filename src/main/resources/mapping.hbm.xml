@@ -15,7 +15,16 @@
 
     </class>
 
+<!--    <class name="entity.Shoes" table="SHOES">-->
+<!--        <id name = "id" type = "int" column = "id">-->
+<!--            <generator class="native"/>-->
+<!--        </id>-->
+<!--        <property name="nazwa" column="name"/>-->
+<!--        <property name="cena" column="value"/>-->
 
+
+
+<!--    </class>-->
 
 
 
