@@ -2,18 +2,18 @@ package entity;
 
 import java.util.Set;
 
-public class Shoes {
+public class Roles {
     private int id;
     private String nazwa;
-    private Double cena;
-    private Set<Products> rozmiary;
+    private String kod;
+    private Set<Users> users;
 
-    public Set<Products> getRozmiary() {
-        return rozmiary;
+    public Set<Users> getUsers() {
+        return users;
     }
 
-    public void setRozmiary(Set<Products> rozmiary) {
-        this.rozmiary = rozmiary;
+    public void setUsers(Set<Users> users) {
+        this.users = users;
     }
 
     public int getId() {
@@ -32,11 +32,11 @@ public class Shoes {
         this.nazwa = nazwa;
     }
 
-    public Double getCena() {
-        return cena;
+    public String getKod() {
+        return kod;
     }
 
-    public void setCena(Double cena) {
-        this.cena = cena;
+    public void setKod(String kod) {
+        this.kod = kod;
     }
 }

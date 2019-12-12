@@ -1,5 +1,8 @@
 package Controller;
 
+import entity.Orders;
+import entity.Orders_positions;
+import entity.Shoes;
 import entity.Zamowienia;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,8 +13,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import java.util.Date;
+import java.util.List;
 
 public class pracownikController extends GoTo{
 
@@ -22,14 +29,26 @@ public class pracownikController extends GoTo{
     @FXML
     private TextArea text;
 
+    Configuration conf=new Configuration().configure();
+    SessionFactory factory=conf.buildSessionFactory();
+    Session s=factory.openSession();
 
-    final ObservableList<Zamowienia> data3 = FXCollections.observableArrayList(
-            new Zamowienia(1, new Date(2011,2,14),"Ad","Adam","Kowasli","Zrealizowane"),
-            new Zamowienia(2, new Date(2014,2,4),"ADam","Marcin","Nowak","Anulowane")
-    );
+    ObservableList<Orders> data3 = FXCollections.observableArrayList();
+
+//    final ObservableList<Zamowienia> data3 = FXCollections.observableArrayList(
+//            new Zamowienia(1, new Date(2011,2,14),"Ad","Adam","Kowasli","Zrealizowane"),
+//            new Zamowienia(2, new Date(2014,2,4),"ADam","Marcin","Nowak","Anulowane")
+//    );
 
     public void initialize(){
         System.out.println(login);
+
+        List<Orders> l=s.createQuery("SELECT p FROM Orders p",Orders.class).getResultList();
+        data3.addAll(l);
+
+
+
+
 
         TableColumn numer = new TableColumn("Numer zamówienia");
         TableColumn datA = new TableColumn("Data");
@@ -45,26 +64,26 @@ public class pracownikController extends GoTo{
 
         T_zamowienia.getColumns().addAll(numer, datA, login,imie,nazwisko,status,zaznacz);
         numer.setCellValueFactory(
-                new PropertyValueFactory<Zamowienia, String>("numerZ")
+                new PropertyValueFactory<Orders, String>("id")
         );
         datA.setCellValueFactory(
-                new PropertyValueFactory<Zamowienia, String>("data")
+                new PropertyValueFactory<Orders, String>("data")
         );
         status.setCellValueFactory(
-                new PropertyValueFactory<Zamowienia, String>("status")
+                new PropertyValueFactory<Orders, String>("status")
         );
         login.setCellValueFactory(
-                new PropertyValueFactory<Zamowienia, String>("login")
+                new PropertyValueFactory<Orders, String>("login")
         );
         imie.setCellValueFactory(
-                new PropertyValueFactory<Zamowienia, String>("imie")
+                new PropertyValueFactory<Orders, String>("imie")
         );
         nazwisko.setCellValueFactory(
-                new PropertyValueFactory<Zamowienia, String>("nazwisko")
+                new PropertyValueFactory<Orders, String>("nazwisko")
         );
-        zaznacz.setCellValueFactory(
-                new PropertyValueFactory<Zamowienia, CheckBox>("zaznacz")
-        );
+       zaznacz.setCellValueFactory(
+                new PropertyValueFactory<Orders, CheckBox>("zaznacz")
+       );
 
 
         T_zamowienia.setItems(data3);
@@ -77,7 +96,7 @@ public class pracownikController extends GoTo{
     }
 
     public void anulowanie(ActionEvent actionEvent) {
-        for(Zamowienia z:data3){
+        for(Orders z:data3){
             if(z.getZaznacz().isSelected()){
                 z.setStatus("Anulowane");
             }
@@ -86,7 +105,7 @@ public class pracownikController extends GoTo{
     }
 
     public void zrealizowane(ActionEvent actionEvent) {
-        for(Zamowienia z:data3){
+        for(Orders z:data3){
             if(z.getZaznacz().isSelected()){
                 z.setStatus("Zrealizowane");
             }
@@ -95,8 +114,19 @@ public class pracownikController extends GoTo{
     }
 
     public void szczegoly(ActionEvent actionEvent) {
-        Zamowienia z=(Zamowienia) T_zamowienia.getSelectionModel().getSelectedItem();
-        if(z!=null) text.setText(z.toString1());
+        Orders o=(Orders) T_zamowienia.getSelectionModel().getSelectedItem();
+        String s="";
+        if(o!=null) {
+
+            for(Orders_positions p: o.getPozycje()){
+                s+=(p.toString());
+                s+="d";
+            }
+
+
+            text.setText(s);
+
+        }
     }
 
     public String getLogin() {

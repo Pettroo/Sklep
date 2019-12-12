@@ -4,43 +4,112 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="entity.Produkty" table="PRODUKTY">
-        <id name = "id" type = "int" column = "id">
-            <generator class="native"/>
+
+    <class name="entity.Roles" table="ROLES">
+        <id name="id" type="int" column="id">
+            <generator class="increment"/>
         </id>
-        <property name="nazwa" column="nazwa"/>
-        <property name="cena" column="cena"/>
+        <property name="nazwa" column="name"/>
+        <property name="kod" column="role_code" not-null="true"/>
+        <set name="users">
+            <key column="id"/>
+            <one-to-many class="entity.Users"/>
 
+        </set>
+    </class>
+    <class name="entity.Users" table="USERS">
+        <id name = "id" type = "int" column = "id">
+            <generator class="increment"/>
+        </id>
+        <property name="imie" column="forename"/>
+        <property name="nazwisko" column="name"/>
+        <property name="login" column="login" not-null="true"/>
+        <property name="haslo" column="password" not-null="true"/>
+        <many-to-one name="rola" column="role" not-null="true"/>
+        <set name="zamowienia">
+            <key column="id"/>
+            <one-to-many class="entity.Orders"/>
 
+        </set>
+    </class>
+
+    <class name="entity.Shoes" table="SHOES">
+        <id name = "id" type = "int" column = "id">
+            <generator class="increment"/>
+        </id>
+        <property name="nazwa" column="name" not-null="true"/>
+        <property name="cena" column="value" not-null="true"/>
+        <set name="rozmiary">
+            <key column="id"/>
+            <one-to-many class="entity.Products"/>
+
+        </set>
+    </class>
+
+    <class name="entity.Products" table="PRODUCTS">
+        <id name = "id" type = "int" column = "id">
+            <generator class="increment"/>
+        </id>
+        <property name="size" column="size" not-null="true"/>
+        <property name="status" column="available_status" not-null="true"/>
+        <many-to-one name="shoe_id" column="shoe_id" not-null="true"/>
 
     </class>
 
-<!--    <class name="entity.Shoes" table="SHOES">-->
+    <class name="entity.Orders" table="ORDERS">
+        <id name = "id" type = "int" column = "id">
+            <generator class="increment"/>
+        </id>
+        <property name="data" column="date"/>
+        <property name="status" column="status" not-null="true"/>
+        <many-to-one name="customer" column="customer" not-null="true"/>
+        <set name="pozycje">
+            <key column="id"/>
+            <one-to-many class="entity.Orders_positions"/>
+
+        </set>
+
+    </class>
+
+    <class name="entity.Orders_positions" table="ORDERS_POSITIONS">
+        <id name = "id" type = "int" column = "id">
+            <generator class="increment"/>
+        </id>
+
+        <property name="ilosc" column="quantity" not-null="true"/>
+        <property name="cena" column="single_price" not-null="true"/>
+        <many-to-one name="order" column="order_id" not-null="true"/>
+        <many-to-one name="produkt" column="product_id" not-null="true"/>
+
+    </class>
+
+
+
+
+
+<!--    <class name="entity.Produkty" table="PRODUKTY">-->
 <!--        <id name = "id" type = "int" column = "id">-->
 <!--            <generator class="native"/>-->
 <!--        </id>-->
-<!--        <property name="nazwa" column="name"/>-->
-<!--        <property name="cena" column="value"/>-->
+<!--        <property name="nazwa" column="nazwa"/>-->
+<!--        <property name="cena" column="cena"/>-->
 
 
 
 <!--    </class>-->
+<!--    <class name = "entity.Employee" table = "EMPLOYEE">-->
 
+<!--        <meta attribute = "class-description">-->
+<!--            This class contains the employee detail.-->
+<!--        </meta>-->
 
+<!--        <id name = "id" type = "int" column = "id">-->
+<!--            <generator class="native"/>-->
+<!--        </id>-->
 
-    <class name = "entity.Employee" table = "EMPLOYEE">
+<!--        <property name = "firstName" column = "first_name" type = "string"/>-->
+<!--        <property name = "lastName" column = "last_name" type = "string"/>-->
+<!--        <property name = "salary" column = "salary" type = "int"/>-->
 
-        <meta attribute = "class-description">
-            This class contains the employee detail.
-        </meta>
-
-        <id name = "id" type = "int" column = "id">
-            <generator class="native"/>
-        </id>
-
-        <property name = "firstName" column = "first_name" type = "string"/>
-        <property name = "lastName" column = "last_name" type = "string"/>
-        <property name = "salary" column = "salary" type = "int"/>
-
-    </class>
+<!--    </class>-->
 </hibernate-mapping>

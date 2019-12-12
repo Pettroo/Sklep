@@ -42,7 +42,7 @@ public class Produkty {
         this.nazwa = nazwa;
         this.cena = cena;
         this.koszyk = new Button("Dodaj do koszyka");
-        this.ilosc = new Spinner(1, 10, 1);
+        this.ilosc = new Spinner(1, 100, 1);
         this.rozmiar = new ComboBox();
         this.zaznacz = new CheckBox();
         this.status = new ComboBox();

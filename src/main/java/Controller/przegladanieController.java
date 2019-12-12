@@ -21,21 +21,13 @@ public class przegladanieController extends GoTo {
     @FXML
     private TableView T_produkty;
 
-
-
-
-    public void back(ActionEvent actionEvent) {
-        goTo(actionEvent,"/FXML/logowanie.fxml");
-
-    }
     public void initialize() {
         Configuration conf=new Configuration().configure();
         SessionFactory factory=conf.buildSessionFactory();
         Session s=factory.openSession();
 
-        List<Produkty> l=s.createQuery("SELECT p FROM Produkty p", Produkty.class).getResultList();
-        ObservableList<Produkty> data = FXCollections.observableArrayList();
-
+        List<Shoes> l=s.createQuery("SELECT s FROM Shoes s", Shoes.class).getResultList();
+        ObservableList<Shoes> data = FXCollections.observableArrayList();
         data.addAll(l);
 
 
@@ -47,17 +39,19 @@ public class przegladanieController extends GoTo {
 
 
         name.setCellValueFactory(
-                new PropertyValueFactory<Produkty, String>("nazwa")
+                new PropertyValueFactory<Shoes, String>("nazwa")
         );
 
         cena.setCellValueFactory(
-                new PropertyValueFactory<Produkty, String>("cena")
+                new PropertyValueFactory<Shoes, String>("cena")
         );
-
-
 
         T_produkty.setItems(data);
 
+    }
+
+    public void back(ActionEvent actionEvent) {
+        goTo(actionEvent,"/FXML/logowanie.fxml");
 
     }
 

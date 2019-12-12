@@ -1,8 +1,6 @@
 package Controller;
 
-import entity.Zamowienia;
-import entity.pracownicy;
-import entity.Produkty;
+import entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -48,86 +46,46 @@ public class managerController extends GoTo {
 
     public void initialize() {
         System.out.println(login);
+
+     //Tabela pracowników
         TableColumn imie = new TableColumn("Imię");
         TableColumn nazwisko = new TableColumn("Nazwisko");
         TableColumn login = new TableColumn("Login");
-        TableColumn uprawnienia = new TableColumn("Uprawnienia");
+        TableColumn uprawnienia_actual = new TableColumn("Uprawnienia");
+        TableColumn uprawnienia_change = new TableColumn("Zmień uprawnienia");
 
 
-        T_pracownicy.getColumns().addAll(imie, nazwisko, login, uprawnienia);
 
-
-        final ObservableList<pracownicy> data = FXCollections.observableArrayList(
-                new pracownicy("Adam", "Nowak", "Adam123"),
-                new pracownicy("Marcin", "Kowalski", "mArCiN"),
-                new pracownicy("Stefan", "Górki", "xXStefanXx")
-        );
 
         imie.setCellValueFactory(
-                new PropertyValueFactory<Produkty, String>("imie")
+                new PropertyValueFactory<Users, String>("imie")
         );
 
         nazwisko.setCellValueFactory(
-                new PropertyValueFactory<Produkty, String>("nazwisko")
+                new PropertyValueFactory<Users, String>("nazwisko")
         );
         login.setCellValueFactory(
-                new PropertyValueFactory<Produkty, ComboBox>("login")
+                new PropertyValueFactory<Users, String>("login")
         );
 
-        uprawnienia.setCellValueFactory(
-                new PropertyValueFactory<Produkty, Button>("uprawnienia")
+        uprawnienia_actual.setCellValueFactory(
+                new PropertyValueFactory<Users, String>("rolaDisp")
+        );
+        uprawnienia_change.setCellValueFactory(
+                new PropertyValueFactory<Users, ComboBox>("uprawnienia")
         );
 
-
-        T_pracownicy.setItems(data);
-
-
-        //-----------------------tabela modyfikacja----------------------//
-
-//
-//        TableColumn name2 = new TableColumn("Nazwa");
-//        TableColumn cena2 = new TableColumn("Cena");
-//        TableColumn rozmiar2 = new TableColumn("Rozmiar");
-//        TableColumn ilosc2 = new TableColumn("Ilośc");
-//        TableColumn zaznacz2 = new TableColumn("Zaznacz");
-//
-//        T_modyfikacja.getColumns().addAll(name2, cena2, rozmiar2, ilosc2, zaznacz2);
-//
-//
-//        final ObservableList<Produkty> data2 = FXCollections.observableArrayList(
-//                new Produkty("Adidasy", 23.50),
-//                new Produkty("Sandały", 70.60),
-//                new Produkty("Kozaki", 230.99)
-//        );
-//
-//
-//        name2.setCellValueFactory(
-//                new PropertyValueFactory<Produkty, String>("nazwa")
-//        );
-//
-//        cena2.setCellValueFactory(
-//                new PropertyValueFactory<Produkty, String>("cena")
-//        );
-//        rozmiar2.setCellValueFactory(
-//                new PropertyValueFactory<Produkty, ComboBox>("rozmiar")
-//        );
-//        ilosc2.setCellValueFactory(
-//                new PropertyValueFactory<Produkty, Spinner>("ilosc")
-//        );
-//
-//
-//        zaznacz2.setCellValueFactory(
-//                new PropertyValueFactory<Produkty, CheckBox>("zaznacz")
-//        );
-//
-//        T_modyfikacja.setItems(data2);
-
-        //---------------------------------------------//
+        T_pracownicy.getColumns().addAll(imie, nazwisko, login, uprawnienia_actual,uprawnienia_change);
 
 
-        List<Produkty> l=s.createQuery("SELECT p FROM Produkty p",Produkty.class).getResultList();
 
-        ObservableList<Produkty> data2 = FXCollections.observableArrayList();
+
+     //Tabela modyfikacji
+
+
+        List<Shoes> l=s.createQuery("SELECT p FROM Shoes p",Shoes.class).getResultList();
+
+        ObservableList<Shoes> data2 = FXCollections.observableArrayList();
 
         data2.addAll(l);
 
@@ -140,41 +98,46 @@ public class managerController extends GoTo {
 
 
         name.setCellValueFactory(
-                new PropertyValueFactory<Produkty, String>("nazwa")
+                new PropertyValueFactory<Shoes, String>("nazwa")
         );
 
         cena.setCellValueFactory(
-                new PropertyValueFactory<Produkty, String>("cena")
+                new PropertyValueFactory<Shoes, String>("cena")
         );
 
 
 
         T_modyfikacja.setItems(data2);
 
-    //-------------//
+    //Tabela zmiany dostępności
         TableColumn name3 = new TableColumn("Nazwa");
         TableColumn cena3 = new TableColumn("Cena");
         TableColumn rozmiar = new TableColumn("Rozmiar");
-        TableColumn status = new TableColumn("Status");
+        TableColumn status_actual = new TableColumn("Status");
+        TableColumn status_new = new TableColumn("Zemień status");
 
 
-        T_dostepmosc.getColumns().addAll(name3, cena3, rozmiar,status);
         name3.setCellValueFactory(
-                new PropertyValueFactory<Produkty, String>("nazwa")
+                new PropertyValueFactory<Products, String>("name")
         );
 
         cena3.setCellValueFactory(
-                new PropertyValueFactory<Produkty, String>("cena")
+                new PropertyValueFactory<Products, String>("value")
         );
 
 
         rozmiar.setCellValueFactory(
-                new PropertyValueFactory<Produkty, ComboBox>("rozmiar")
+                new PropertyValueFactory<Products, String>("size")
         );
 
-        status.setCellValueFactory(
-                new PropertyValueFactory<Produkty, ComboBox>("status")
+        status_actual.setCellValueFactory(
+                new PropertyValueFactory<Products, String>("status_disp")
         );
+        status_new.setCellValueFactory(
+                new PropertyValueFactory<Products, ComboBox>("status_zmien")
+        );
+        T_dostepmosc.getColumns().addAll(name3, cena3, rozmiar,status_actual,status_new);
+
     }
 
 
@@ -185,7 +148,7 @@ public class managerController extends GoTo {
     }
 
     public void modyfikacja(ActionEvent actionEvent) {
-        Produkty p=(Produkty) T_modyfikacja.getSelectionModel().getSelectedItem();
+        Shoes p=(Shoes) T_modyfikacja.getSelectionModel().getSelectedItem();
         if(p!=null) {
             nazwa_modyfikacja.setText(p.getNazwa());
             String s=""+p.getCena();
@@ -195,9 +158,9 @@ public class managerController extends GoTo {
     }
 
     public void dodaj(ActionEvent actionEvent) {
-        s.beginTransaction();
-        s.save(new Produkty(20,nazwa_input.getText(),parseDouble(cena_input.getText())));
-        s.getTransaction().commit();
+     //   s.beginTransaction();
+     //   s.save(new Produkty(20,nazwa_input.getText(),parseDouble(cena_input.getText())));
+     //   s.getTransaction().commit();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setTitle("Dodano nowy produkt");
@@ -212,27 +175,28 @@ public class managerController extends GoTo {
     }
 
     public void tab_modyfikacja(Event event) {
-        List<Produkty> l=s.createQuery("SELECT p FROM Produkty p",Produkty.class).getResultList();
-        ObservableList<Produkty> data2 = FXCollections.observableArrayList();
+        List<Shoes> l=s.createQuery("SELECT p FROM Shoes p",Shoes.class).getResultList();
+        ObservableList<Shoes> data2 = FXCollections.observableArrayList();
         data2.addAll(l);
         T_modyfikacja.setItems(data2);
     }
 
     public void tab_dostepnosc(Event event) {
-
-        final ObservableList<Produkty> data = FXCollections.observableArrayList(
-                new Produkty("Adidasy", 23.50),
-                new Produkty("Sandały", 70.60),
-                new Produkty("Kozaki", 230.99)
-        );
-
-
-
-
+        List<Products> l=s.createQuery("SELECT p FROM Products p",Products.class).getResultList();
+        ObservableList<Products> data = FXCollections.observableArrayList();
+        data.addAll(l);
         T_dostepmosc.setItems(data);
 
     }
+    public void tab_pracownicy(Event event) {
+        List<Users> l_u=s.createQuery("SELECT u FROM Users u",Users.class).getResultList();
 
+        ObservableList<Users> data = FXCollections.observableArrayList();
+
+        data.addAll(l_u);
+        T_pracownicy.setItems(data);
+
+    }
     public String getLogin() {
         return login;
     }
