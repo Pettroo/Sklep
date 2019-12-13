@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 @NamedStoredProcedureQuery(
         name="s",
-        procedureName="s_products.add_shoe",
+        procedureName="Dodaj",
         parameters = {@StoredProcedureParameter(mode=ParameterMode.IN, type = String.class,name="p_name"),
                 @StoredProcedureParameter(mode=ParameterMode.IN, type = Double.class,name="p_value")
         }

@@ -19,6 +19,7 @@ import org.hibernate.cfg.Configuration;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.sql.SQLException;
 import java.util.List;
 
 public class przegladanieController extends GoTo {
@@ -26,13 +27,10 @@ public class przegladanieController extends GoTo {
     @FXML
     private TableView T_produkty;
 
-    public void initialize() {
+    public void initialize() throws SQLException {
 //        EntityManagerFactory fabryka= Persistence.createEntityManagerFactory("Test");
 //        EntityManager menadzer=fabryka.createEntityManager();
 //        List<Shoes> l=menadzer.createQuery("SELECT s FROM Shoes s", Shoes.class).getResultList();
-
-       ManagerRepo repo=new ManagerRepo();
-       repo.dodajButa();
 
         ObservableList<Shoes> data = FXCollections.observableArrayList();
         ShoesRepo rep=new ShoesRepo();

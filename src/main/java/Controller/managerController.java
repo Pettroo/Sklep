@@ -166,9 +166,17 @@ public class managerController extends GoTo {
      //   s.beginTransaction();
      //   s.save(new Produkty(20,nazwa_input.getText(),parseDouble(cena_input.getText())));
      //   s.getTransaction().commit();
+
+
+        ManagerRepo repo=new ManagerRepo();
+        repo.dodajButa(nazwa_input.getText(),parseDouble(cena_input.getText()));
+
+
+
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
-        alert.setTitle("Dodano nowy produkt");
+        alert.setTitle("Dodano nowy produkt:" + nazwa_input.getText());
         alert.setContentText(nazwa_input.getText()+" "+parseDouble(cena_input.getText()));
 
         alert.showAndWait();
