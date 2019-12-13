@@ -17,6 +17,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.Date;
 import java.util.List;
 
@@ -29,9 +32,11 @@ public class pracownikController extends GoTo{
     @FXML
     private TextArea text;
 
-    Configuration conf=new Configuration().configure();
-    SessionFactory factory=conf.buildSessionFactory();
-    Session s=factory.openSession();
+//    Configuration conf=new Configuration().configure();
+//    SessionFactory factory=conf.buildSessionFactory();
+//    Session s=factory.openSession();
+EntityManagerFactory fabryka= Persistence.createEntityManagerFactory("Test");
+    EntityManager s=fabryka.createEntityManager();
 
     ObservableList<Orders> data3 = FXCollections.observableArrayList();
 
@@ -118,10 +123,10 @@ public class pracownikController extends GoTo{
         String s="";
         if(o!=null) {
 
-            for(Orders_positions p: o.getPozycje()){
-                s+=(p.toString());
-                s+="d";
-            }
+         //   for(Orders_positions p: o.getPozycje()){
+        //        s+=(p.toString());
+        //        s+="d";
+         //   }
 
 
             text.setText(s);

@@ -1,11 +1,27 @@
 package entity;
 
+import javax.persistence.*;
 import java.util.Set;
+@NamedStoredProcedureQuery(
+        name="s",
+        procedureName="s_products.add_shoe",
+        parameters = {@StoredProcedureParameter(mode=ParameterMode.IN, type = String.class,name="p_name"),
+                @StoredProcedureParameter(mode=ParameterMode.IN, type = Double.class,name="p_value")
+        }
 
+)
+
+@Entity
+@Table(name="SHOES")
 public class Shoes {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(name="name", nullable=false)
     private String nazwa;
+    @Column(name="value", nullable = false)
     private Double cena;
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "shoe")
     private Set<Products> rozmiary;
 
     public Set<Products> getRozmiary() {

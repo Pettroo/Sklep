@@ -4,19 +4,42 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
+import javax.persistence.*;
+
 import java.util.Set;
 
+
+@Entity
+@Table(name="USERS")
 public class Users {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(name="forename")
     private String imie;
+    @Column(name="name")
     private String nazwisko;
+    @Column(name="login", nullable=false)
     private String login;
+    @Column(name="password", nullable=false)
     private String haslo;
+    @ManyToOne
+    @JoinColumn(name="role", nullable=false)
     private Roles rola;
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "customer")
     private Set<Orders> zamowienia;
 
+    public Set<Orders> getZamowienia() {
+        return zamowienia;
+    }
 
-    private ComboBox uprawnienia;      //display
+    public void setZamowienia(Set<Orders> zamowienia) {
+        this.zamowienia = zamowienia;
+    }
+
+    @Transient
+    private ComboBox uprawnienia;
+    @Transient//display
     private String rolaDisp;           //display
 
 
@@ -93,13 +116,6 @@ public class Users {
         this.rolaDisp = rolaDisp;
     }
 
-    public Set<Orders> getZamowienia() {
-        return zamowienia;
-    }
-
-    public void setZamowienia(Set<Orders> zamowienia) {
-        this.zamowienia = zamowienia;
-    }
 
 
 }

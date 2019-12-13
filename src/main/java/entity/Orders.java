@@ -2,20 +2,43 @@ package entity;
 
 import javafx.scene.control.CheckBox;
 
+import javax.persistence.*;
+
 import java.util.Date;
 import java.util.Set;
 
+
+@Entity
+@Table(name="ORDERS")
 public class Orders {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(name="date")
     private Date data;
+    @Column(name="status", nullable=false)
     private String status;
+    @ManyToOne
+    @JoinColumn(name="customer", nullable=false)
     private Users customer;
-    private Set<Orders_positions> pozycje;
+//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
+//   private Set<Orders_positions> pozycje;
+//
+//    public Set<Orders_positions> getPozycje() {
+//        return pozycje;
+//    }
+//
+//    public void setPozycje(Set<Orders_positions> pozycje) {
+//        this.pozycje = pozycje;
+//    }
 
-    private String login;       //display
-    private String imie;        //display
-    private String nazwisko;    //display
-
+    @Transient
+    private String login;
+    @Transient//display
+    private String imie;
+    @Transient//display
+    private String nazwisko;
+    @Transient//display
     private CheckBox zaznacz;   //display
 
     public Orders() {
@@ -51,13 +74,7 @@ public class Orders {
 
 
 
-    public Set<Orders_positions> getPozycje() {
-        return pozycje;
-    }
 
-    public void setPozycje(Set<Orders_positions> pozycje) {
-        this.pozycje = pozycje;
-    }
 
     public int getId() {
         return id;

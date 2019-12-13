@@ -4,17 +4,71 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
+import javax.persistence.*;
 import java.util.Set;
 
+
+@Entity
+@Table(name="PRODUCTS")
+@IdClass(ProductsId.class)
 public class Products {
+    @Column(name="id")
     private int id;
-    private Shoes shoe_id;
+    @Id
+    @Column(name="shoe_id",insertable=false, updatable=false)
+    private int shoe_id;
+    @Id
+    @Column(name="size",insertable=false, updatable=false)
     private String size;
+    @Column(name="available_status",nullable = false)
     private boolean status;
 
-    private String name;       //display
-    private Double value;       //display
-    private ComboBox status_zmien;      //display
+    @ManyToOne
+    @PrimaryKeyJoinColumn(name="shoe_id", referencedColumnName = "id")
+    private Shoes shoe;
+
+/*
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "produkt")
+    private Set<Orders_positions> lista;
+
+    public Set<Orders_positions> getLista() {
+        return lista;
+    }
+
+    public void setLista(Set<Orders_positions> lista) {
+        this.lista = lista;
+    }
+*/
+
+
+    public int getShoe_id() {
+        return shoe_id;
+    }
+
+    public void setShoe_id(int shoe_id) {
+        this.shoe_id = shoe_id;
+    }
+
+
+
+
+    public Shoes getShoe() {
+        return shoe;
+    }
+
+    public void setShoe(Shoes shoe) {
+        this.shoe = shoe;
+    }
+
+
+
+    @Transient
+    private String name;
+    @Transient//display
+    private Double value;
+    @Transient//display
+    private ComboBox status_zmien;
+    @Transient//display
     private String status_disp;         //diplay
 
     public String getStatus_disp() {
@@ -42,22 +96,22 @@ public class Products {
     }
 
     public String getName() {
-        name=shoe_id.getNazwa();
+        name=shoe.getNazwa();
         return name;
     }
 
     public void setName(String name) {
-        name=shoe_id.getNazwa();
+        name=shoe.getNazwa();
         this.name = name;
     }
 
     public Double getValue() {
-        value=shoe_id.getCena();
+        value=shoe.getCena();
         return value;
     }
 
     public void setValue(Double value) {
-        value=shoe_id.getCena();
+        value=shoe.getCena();
 
         this.value = value;
     }
@@ -70,13 +124,7 @@ public class Products {
         this.id = id;
     }
 
-    public Shoes getShoe_id() {
-        return shoe_id;
-    }
 
-    public void setShoe_id(Shoes shoe_id) {
-        this.shoe_id = shoe_id;
-    }
 
     public String getSize() {
         return size;

@@ -1,7 +1,9 @@
 package Controller;
 
+import entity.ManagerRepo;
 import entity.Produkty;
 import entity.Shoes;
+import entity.ShoesRepo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +16,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 public class przegladanieController extends GoTo {
@@ -22,13 +27,25 @@ public class przegladanieController extends GoTo {
     private TableView T_produkty;
 
     public void initialize() {
-        Configuration conf=new Configuration().configure();
-        SessionFactory factory=conf.buildSessionFactory();
-        Session s=factory.openSession();
+//        EntityManagerFactory fabryka= Persistence.createEntityManagerFactory("Test");
+//        EntityManager menadzer=fabryka.createEntityManager();
+//        List<Shoes> l=menadzer.createQuery("SELECT s FROM Shoes s", Shoes.class).getResultList();
 
-        List<Shoes> l=s.createQuery("SELECT s FROM Shoes s", Shoes.class).getResultList();
+       ManagerRepo repo=new ManagerRepo();
+       repo.dodajButa();
+
         ObservableList<Shoes> data = FXCollections.observableArrayList();
-        data.addAll(l);
+        ShoesRepo rep=new ShoesRepo();
+        data.addAll(rep.allShoes());
+
+
+//        Configuration conf=new Configuration().configure();
+//        SessionFactory factory=conf.buildSessionFactory();
+//        Session s=factory.openSession();
+//
+//        List<Shoes> l=s.createQuery("SELECT s FROM Shoes s", Shoes.class).getResultList();
+//        ObservableList<Shoes> data = FXCollections.observableArrayList();
+//        data.addAll(l);
 
 
         TableColumn name = new TableColumn("Nazwa");

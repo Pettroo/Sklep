@@ -6,7 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="sk_zniana_na_adnotacje" />
         <module name="sk" />
+        <module name="sk_zmiana_na_adnotacje" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
