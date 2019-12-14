@@ -1,9 +1,6 @@
 package Controller;
 
 import entity.Orders;
-import entity.Orders_positions;
-import entity.Shoes;
-import entity.Zamowienia;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,14 +10,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.util.Date;
 import java.util.List;
 
 public class pracownikController extends GoTo {
@@ -31,11 +24,8 @@ public class pracownikController extends GoTo {
     private TableView T_zamowienia;
     @FXML
     private TextArea text;
-
-    EntityManagerFactory fabryka = Persistence.createEntityManagerFactory("Test");
-    EntityManager s = fabryka.createEntityManager();
-
-    ObservableList<Orders> data3 = FXCollections.observableArrayList();
+    pracownikRepo repo = new pracownikRepo();
+    ObservableList<Orders> data = FXCollections.observableArrayList();
 
     public void initialize() {
         System.out.println(login);
@@ -57,9 +47,8 @@ public class pracownikController extends GoTo {
         zaznacz.setCellValueFactory(new PropertyValueFactory<Orders, CheckBox>("zaznacz"));
         T_zamowienia.getColumns().addAll(numer, datA, login, imie, nazwisko, status, zaznacz);
 
-        List<Orders> l = s.createQuery("SELECT p FROM Orders p", Orders.class).getResultList();
-        data3.addAll(l);
-        T_zamowienia.setItems(data3);
+        data.addAll(repo.getAllOrders());
+        T_zamowienia.setItems(data);
     }
 
 
@@ -68,7 +57,7 @@ public class pracownikController extends GoTo {
     }
 
     public void anulowanie(ActionEvent actionEvent) {
-        for (Orders z : data3) {
+        for (Orders z : data) {
             if (z.getZaznacz().isSelected()) {
                 z.setStatus("Anulowane");
             }
@@ -77,7 +66,7 @@ public class pracownikController extends GoTo {
     }
 
     public void zrealizowane(ActionEvent actionEvent) {
-        for (Orders z : data3) {
+        for (Orders z : data) {
             if (z.getZaznacz().isSelected()) {
                 z.setStatus("Zrealizowane");
             }
@@ -94,7 +83,7 @@ public class pracownikController extends GoTo {
             //        s+=(p.toString());
             //        s+="d";
             //   }
-
+            // nie działa bo nie ma połaczenia z order do order_positions
 
             text.setText(s);
 

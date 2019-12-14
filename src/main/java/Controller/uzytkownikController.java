@@ -1,10 +1,7 @@
 package Controller;
 
 import entity.Orders;
-import entity.Produkty;
 import entity.Shoes;
-import entity.Zamowienia;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,10 +9,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.w3c.dom.ls.LSOutput;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class uzytkownikController extends GoTo {
 
