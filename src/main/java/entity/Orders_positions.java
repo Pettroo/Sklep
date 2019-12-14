@@ -2,24 +2,21 @@ package entity;
 
 import javax.persistence.*;
 
-import java.util.Date;
-
-
 @Entity
-@Table(name="ORDERS_POSITIONS")
+@Table(name = "ORDERS_POSITIONS")
 @IdClass(Orders_positionsId.class)
 public class Orders_positions {
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
     @Id
-    @Column(name="order_id",insertable=false, updatable=false)
+    @Column(name = "order_id", insertable = false, updatable = false)
     private int orderId;
     @Id
-    @Column(name="product_id",insertable=false, updatable=false)
+    @Column(name = "product_id", insertable = false, updatable = false)
     private int produktId;
-    @Column(name="quantity",nullable = false)
+    @Column(name = "quantity", nullable = false)
     private Integer ilosc;
-    @Column(name="single_price",nullable = false)
+    @Column(name = "single_price", nullable = false)
     private Double cena;
 
     public int getOrderId() {
@@ -39,12 +36,11 @@ public class Orders_positions {
     }
 
     @ManyToOne
-    @PrimaryKeyJoinColumn(name="order_id",referencedColumnName = "id")
+    @PrimaryKeyJoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders order;
     @ManyToOne
-    @PrimaryKeyJoinColumn(name="product_id",referencedColumnName = "id")
+    @PrimaryKeyJoinColumn(name = "product_id", referencedColumnName = "id")
     private Products produkt;
-
 
 
     public int getId() {

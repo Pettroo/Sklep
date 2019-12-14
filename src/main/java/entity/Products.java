@@ -7,24 +7,23 @@ import javafx.scene.control.ComboBox;
 import javax.persistence.*;
 import java.util.Set;
 
-
 @Entity
-@Table(name="PRODUCTS")
+@Table(name = "PRODUCTS")
 @IdClass(ProductsId.class)
 public class Products {
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
     @Id
-    @Column(name="shoe_id",insertable=false, updatable=false)
+    @Column(name = "shoe_id", insertable = false, updatable = false)
     private int shoe_id;
     @Id
-    @Column(name="size",insertable=false, updatable=false)
+    @Column(name = "size", insertable = false, updatable = false)
     private String size;
-    @Column(name="available_status",nullable = false)
+    @Column(name = "available_status", nullable = false)
     private boolean status;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn(name="shoe_id", referencedColumnName = "id")
+    @PrimaryKeyJoinColumn(name = "shoe_id", referencedColumnName = "id")
     private Shoes shoe;
 
 /*
@@ -50,8 +49,6 @@ public class Products {
     }
 
 
-
-
     public Shoes getShoe() {
         return shoe;
     }
@@ -61,19 +58,18 @@ public class Products {
     }
 
 
-
     @Transient
     private String name;
-    @Transient//display
+    @Transient
     private Double value;
-    @Transient//display
+    @Transient
     private ComboBox status_zmien;
-    @Transient//display
-    private String status_disp;         //diplay
+    @Transient
+    private String status_disp;
 
     public String getStatus_disp() {
-        if(status) status_disp="Dostępny";
-        else status_disp="Niedostępny";
+        if (status) status_disp = "Dostępny";
+        else status_disp = "Niedostępny";
         return status_disp;
     }
 
@@ -83,7 +79,7 @@ public class Products {
     }
 
     public Products() {
-        ObservableList<String> options = FXCollections.observableArrayList("Niedostępny","Dostępny");
+        ObservableList<String> options = FXCollections.observableArrayList("Niedostępny", "Dostępny");
         this.status_zmien = new ComboBox(options);
     }
 
@@ -96,22 +92,22 @@ public class Products {
     }
 
     public String getName() {
-        name=shoe.getNazwa();
+        name = shoe.getNazwa();
         return name;
     }
 
     public void setName(String name) {
-        name=shoe.getNazwa();
+        name = shoe.getNazwa();
         this.name = name;
     }
 
     public Double getValue() {
-        value=shoe.getCena();
+        value = shoe.getCena();
         return value;
     }
 
     public void setValue(Double value) {
-        value=shoe.getCena();
+        value = shoe.getCena();
 
         this.value = value;
     }
@@ -123,7 +119,6 @@ public class Products {
     public void setId(int id) {
         this.id = id;
     }
-
 
 
     public String getSize() {

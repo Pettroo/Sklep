@@ -10,23 +10,23 @@ import java.util.Set;
 
 
 @Entity
-@Table(name="USERS")
+@Table(name = "USERS")
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name="forename")
+    @Column(name = "forename")
     private String imie;
-    @Column(name="name")
+    @Column(name = "name")
     private String nazwisko;
-    @Column(name="login", nullable=false)
+    @Column(name = "login", nullable = false)
     private String login;
-    @Column(name="password", nullable=false)
+    @Column(name = "password", nullable = false)
     private String haslo;
     @ManyToOne
-    @JoinColumn(name="role", nullable=false)
+    @JoinColumn(name = "role", nullable = false)
     private Roles rola;
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "customer")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
     private Set<Orders> zamowienia;
 
     public Set<Orders> getZamowienia() {
@@ -39,8 +39,8 @@ public class Users {
 
     @Transient
     private ComboBox uprawnienia;
-    @Transient//display
-    private String rolaDisp;           //display
+    @Transient
+    private String rolaDisp;
 
 
     public Users() {
@@ -115,7 +115,6 @@ public class Users {
         rolaDisp = rola.getNazwa();
         this.rolaDisp = rolaDisp;
     }
-
 
 
 }

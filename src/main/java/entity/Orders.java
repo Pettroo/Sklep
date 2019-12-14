@@ -9,17 +9,17 @@ import java.util.Set;
 
 
 @Entity
-@Table(name="ORDERS")
+@Table(name = "ORDERS")
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name="date")
+    @Column(name = "date")
     private Date data;
-    @Column(name="status", nullable=false)
+    @Column(name = "status", nullable = false)
     private String status;
     @ManyToOne
-    @JoinColumn(name="customer", nullable=false)
+    @JoinColumn(name = "customer", nullable = false)
     private Users customer;
 //    @OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
 //   private Set<Orders_positions> pozycje;
@@ -34,15 +34,15 @@ public class Orders {
 
     @Transient
     private String login;
-    @Transient//display
+    @Transient
     private String imie;
-    @Transient//display
+    @Transient
     private String nazwisko;
-    @Transient//display
-    private CheckBox zaznacz;   //display
+    @Transient
+    private CheckBox zaznacz;
 
     public Orders() {
-        this.zaznacz=new CheckBox();
+        this.zaznacz = new CheckBox();
     }
 
     public CheckBox getZaznacz() {
@@ -54,26 +54,21 @@ public class Orders {
     }
 
     public String getLogin() {
-        login=customer.getLogin();
+        login = customer.getLogin();
         return login;
     }
 
 
-
     public String getImie() {
-        imie=customer.getImie();
+        imie = customer.getImie();
         return imie;
     }
 
 
-
     public String getNazwisko() {
-        nazwisko=customer.getNazwisko();
+        nazwisko = customer.getNazwisko();
         return nazwisko;
     }
-
-
-
 
 
     public int getId() {

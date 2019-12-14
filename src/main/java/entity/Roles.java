@@ -1,18 +1,19 @@
 package entity;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="ROLES")
+@Table(name = "ROLES")
 public class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name="name")
+    @Column(name = "name")
     private String nazwa;
-    @Column(name="role_code", nullable=false)
+    @Column(name = "role_code", nullable = false)
     private String kod;
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "rola")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "rola")
     private Set<Users> users;
 
     public Set<Users> getUsers() {

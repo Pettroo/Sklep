@@ -1,7 +1,5 @@
 package Controller;
 
-import entity.ManagerRepo;
-import entity.Produkty;
 import entity.Shoes;
 import entity.ShoesRepo;
 import javafx.collections.FXCollections;
@@ -12,15 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.sql.SQLException;
-import java.util.List;
 
 public class przegladanieController extends GoTo {
 

@@ -10,13 +10,11 @@ public class logowanieController extends GoTo {
 
     @FXML
     private TextField nazwaU;
-
     @FXML
     private PasswordField password;
 
     @FXML
     public void initialize() {
-
     }
 
     public void zaloguj(ActionEvent actionEvent) {
@@ -25,15 +23,14 @@ public class logowanieController extends GoTo {
             alert.setHeaderText(null);
             alert.setTitle("");
             alert.setContentText("Puste pola login lub hasło");
-
             alert.showAndWait();
         }
-
-        if (nazwaU.getText().equals("a") && password.getText().equals("a")) goToUzywkownicy(actionEvent, "/FXML/uzytkownik.fxml","a");
-        if (nazwaU.getText().equals("b") && password.getText().equals("b")) goToPracownik(actionEvent, "/FXML/pracownik.fxml","b");
-        if (nazwaU.getText().equals("c") && password.getText().equals("c")) goToManager(actionEvent, "/FXML/manager.fxml","c");
-
-
+        if (nazwaU.getText().equals("a") && password.getText().equals("a"))
+            goToUzywkownicy(actionEvent, "/FXML/uzytkownik.fxml", "a");
+        if (nazwaU.getText().equals("b") && password.getText().equals("b"))
+            goToPracownik(actionEvent, "/FXML/pracownik.fxml", "b");
+        if (nazwaU.getText().equals("c") && password.getText().equals("c"))
+            goToManager(actionEvent, "/FXML/manager.fxml", "c");
     }
 
     public void rejestracja(ActionEvent actionEvent) {

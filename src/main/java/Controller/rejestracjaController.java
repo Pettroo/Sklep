@@ -11,23 +11,14 @@ public class rejestracjaController extends GoTo {
 
     @FXML
     private PasswordField password1;
-
     @FXML
     private TextField nazwaU;
-
     @FXML
     private PasswordField password2;
-
     @FXML
     private TextField imie;
-
     @FXML
     private TextField nazwisko;
-
-
-    public void back(ActionEvent actionEvent) {
-        goTo(actionEvent, "/FXML/logowanie.fxml");
-    }
 
     public void utworz(ActionEvent actionEvent) {
 
@@ -43,16 +34,18 @@ public class rejestracjaController extends GoTo {
             alert.setTitle("");
             alert.setContentText("Hasła muszą być identyczne");
             alert.showAndWait();
-
-            } else {
-
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setTitle("Utworzenie konta");
             alert.setContentText("Konto: " + nazwaU.getText() + "  zostało utworzone");
-
             alert.showAndWait();
             goTo(actionEvent, "/FXML/logowanie.fxml");
-            }
+        }
     }
+
+    public void back(ActionEvent actionEvent) {
+        goTo(actionEvent, "/FXML/logowanie.fxml");
+    }
+
 }
