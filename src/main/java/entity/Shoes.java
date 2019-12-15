@@ -1,5 +1,8 @@
 package entity;
 
+import Controller.uzytkownikRepo;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -12,6 +15,7 @@ import java.util.Set;
 @Table(name = "SHOES")
 public class Shoes {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "name", nullable = false)
@@ -21,8 +25,7 @@ public class Shoes {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "shoe")
     private Set<Products> rozmiary;
 
-    @Transient
-    private Button koszyk;
+
     @Transient
     private Spinner ilosc;
     @Transient
@@ -30,9 +33,6 @@ public class Shoes {
     @Transient
     private CheckBox zaznacz;
 
-    public Button getKoszyk() {
-        return koszyk;
-    }
 
     public Spinner getIlosc() {
         return ilosc;
@@ -47,6 +47,7 @@ public class Shoes {
     }
 
     public void setRozmiar(ComboBox rozmiar) {
+
         this.rozmiar = rozmiar;
     }
 
@@ -58,14 +59,12 @@ public class Shoes {
         this.zaznacz = zaznacz;
     }
 
-    public void setKoszyk(Button koszyk) {
-        this.koszyk = koszyk;
-    }
 
     public Shoes() {
-        this.koszyk = new Button("Dodaj do koszyka");
+        ObservableList<String> options = FXCollections.observableArrayList("36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48");
+
         this.ilosc = new Spinner(1, 100, 1);
-        this.rozmiar = new ComboBox();
+        this.rozmiar = new ComboBox(options);
         this.zaznacz = new CheckBox();    }
 
     public Set<Products> getRozmiary() {

@@ -1,5 +1,6 @@
 package Controller;
 
+import entity.Users;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -7,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class logowanieController extends GoTo {
+    private logowanieRepo repo = new logowanieRepo();
 
     @FXML
     private TextField nazwaU;
@@ -24,6 +26,16 @@ public class logowanieController extends GoTo {
             alert.setTitle("");
             alert.setContentText("Puste pola login lub hasło");
             alert.showAndWait();
+        }
+        for (Users u : repo.getAllUsers()) {
+            if (nazwaU.getText().equals(u.getLogin()) && password.getText().equals(u.getHaslo())) {
+                if (u.getRola().getKod().equals("MANAGER"))
+                    goToManager(actionEvent, "/FXML/manager.fxml", u.getLogin());
+                if (u.getRola().getKod().equals("USER"))
+                    goToUzywkownicy(actionEvent, "/FXML/uzytkownik.fxml", u.getLogin());
+                if (u.getRola().getKod().equals("EMPLOYE"))
+                    goToPracownik(actionEvent, "/FXML/pracownik.fxml", u.getLogin());
+            }
         }
         if (nazwaU.getText().equals("a") && password.getText().equals("a"))
             goToUzywkownicy(actionEvent, "/FXML/uzytkownik.fxml", "a");

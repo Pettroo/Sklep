@@ -1,5 +1,6 @@
 package entity;
 
+import Controller.pracownikRepo;
 import javafx.scene.control.CheckBox;
 
 import javax.persistence.*;
@@ -11,7 +12,9 @@ import java.util.Set;
 @Entity
 @Table(name = "ORDERS")
 public class Orders {
+
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "date")
@@ -21,16 +24,16 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "customer", nullable = false)
     private Users customer;
-//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
-//   private Set<Orders_positions> pozycje;
-//
-//    public Set<Orders_positions> getPozycje() {
-//        return pozycje;
-//    }
-//
-//    public void setPozycje(Set<Orders_positions> pozycje) {
-//        this.pozycje = pozycje;
-//    }
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
+    private Set<Orders_positions> pozycje;
+
+    public Set<Orders_positions> getPozycje() {
+        return pozycje;
+    }
+
+    public void setPozycje(Set<Orders_positions> pozycje) {
+        this.pozycje = pozycje;
+    }
 
     @Transient
     private String login;

@@ -64,7 +64,7 @@
                                 <TableView fx:id="T_dostepmosc" prefHeight="358.0" prefWidth="900.0">
 
                                 </TableView>
-                                <Button layoutX="394.0" layoutY="366.0" mnemonicParsing="false" text="Zapisz zmiany" />
+                                <Button layoutX="394.0" layoutY="366.0" mnemonicParsing="false" onAction="#zapisz_dostepnosc" text="Zapisz zmiany" />
                             </children>
                         </Pane>
                     </content>

@@ -1,6 +1,8 @@
 package Controller;
 
 import entity.Orders;
+import entity.Orders_positions;
+import entity.Products;
 import entity.Shoes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +11,8 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.List;
 
 public class uzytkownikController extends GoTo {
 
@@ -23,23 +27,6 @@ public class uzytkownikController extends GoTo {
     private TextArea text;
     private uzytkownikRepo repo = new uzytkownikRepo();
 
-//
-//    final ObservableList<Produkty> data = FXCollections.observableArrayList(
-//            new Produkty("Adidasy", 23.50),
-//            new Produkty("Sandały", 70.60),
-//            new Produkty("Kozaki", 230.99)
-//    );
-//    final ObservableList<Produkty> data2 = FXCollections.observableArrayList(
-//            new Produkty("Adidasy", 23.50),
-//            new Produkty("Sandały", 70.60),
-//            new Produkty("Kozaki", 230.99)
-//    );
-//    final ObservableList<Zamowienia> data3 = FXCollections.observableArrayList(
-//            new Zamowienia(1, new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), "Zrealizowane"),
-//            new Zamowienia(2, new GregorianCalendar(2016, Calendar.JANUARY, 20).getTime(), "Anulowane"),
-//            new Zamowienia(3, new GregorianCalendar(2018, Calendar.JUNE, 1).getTime(), "W trakcie")
-//    );
-
     public void initialize() {
         System.out.println(login);
 
@@ -49,7 +36,7 @@ public class uzytkownikController extends GoTo {
         TableColumn do_koszyka = new TableColumn("Dodaj do koszyka");
         name.setCellValueFactory(new PropertyValueFactory<Shoes, String>("nazwa"));
         cena.setCellValueFactory(new PropertyValueFactory<Shoes, Double>("cena"));
-        do_koszyka.setCellValueFactory(new PropertyValueFactory<Shoes, Button>("koszyk"));
+        do_koszyka.setCellValueFactory(new PropertyValueFactory<Shoes, CheckBox>("zaznacz"));
         T_produkty.getColumns().addAll(name, cena, do_koszyka);
 
 
@@ -78,8 +65,37 @@ public class uzytkownikController extends GoTo {
     }
 
     public void zamow(ActionEvent actionEvent) {
+//        for (Products p : (List<Products>) T_produkty.getItems()) {
+//            if (p.getZaznacz().isSelected()) {
+//                z.setStatus("Anulowane");
+//                repo.setOrderStatus(z);
+//            }
+//
+//        }
+
         //  Produkty p = (Produkty) T_koszyk.getSelectionModel().getSelectedItem();
         //  System.out.println(p.getCena());
+        for (Shoes z : (List<Shoes>) T_produkty.getItems()) {
+            if (z.getZaznacz().isSelected()) {
+                //   z.setStatus("Anulowane");
+                //   data.add(z);
+            }
+        }
+
+
+    }
+
+    public void dodaj_do_koszyka(ActionEvent actionEvent) {
+        ObservableList<Shoes> data = FXCollections.observableArrayList();
+
+        for (Shoes z : (List<Shoes>) T_produkty.getItems()) {
+            if (z.getZaznacz().isSelected()) {
+
+                data.add(z);
+            }
+        }
+
+        T_koszyk.setItems(data);
 
     }
 
@@ -89,11 +105,28 @@ public class uzytkownikController extends GoTo {
         alert.setTitle("Usuwanie");
         alert.setContentText("Wybrane artykóły zostały usunięte");
         alert.showAndWait();
+        for (Shoes z : (List<Shoes>) T_produkty.getItems()) {
+            if (z.getZaznacz().isSelected()) {
+                T_koszyk.getItems().remove(z);
+            }
+        }
+        T_koszyk.refresh();
+        tab_oferta(actionEvent);
+        T_produkty.refresh();
     }
 
     public void szczegoly(ActionEvent actionEvent) {
         Orders z = (Orders) T_zamowienia.getSelectionModel().getSelectedItem();
-        if (z != null) text.setText(z.toString());
+        String s = "";
+        if (z != null) {
+            List<Orders_positions> lista = repo.getOrderPositions(z.getId());
+            for (Orders_positions pos : lista) {
+
+                s += repo.getProduct(pos.getProduktId()).getName() + "  Cena: " + pos.getCena() + "  Ilość: " + pos.getIlosc() + "\n";
+            }
+            text.setText(s);
+
+        }
     }
 
     public void wyloguj(ActionEvent actionEvent) {
@@ -108,23 +141,16 @@ public class uzytkownikController extends GoTo {
     }
 
     public void tab_koszyk(Event event) {
-        ObservableList<Shoes> data = FXCollections.observableArrayList();
-        data.addAll(repo.getAllShoes());
-        T_koszyk.setItems(data);
+
     }
 
     public void tab_zamowienia(Event event) {
         ObservableList<Orders> data = FXCollections.observableArrayList();
-        data.addAll(repo.getAllOrders());
+        data.addAll(repo.getUserOrders(repo.getUser(login).getId()));
         T_zamowienia.setItems(data);
-    }
-
-    public String getLogin() {
-        return login;
     }
 
     public void setLogin(String login) {
         this.login = login;
     }
-
 }

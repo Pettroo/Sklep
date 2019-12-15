@@ -46,6 +46,7 @@ public class Users {
     public Users() {
         ObservableList<String> options = FXCollections.observableArrayList("Użytkownik", "Menadżer", "Pracownik");
         this.uprawnienia = new ComboBox(options);
+
     }
 
     public ComboBox getUprawnienia() {
@@ -62,6 +63,7 @@ public class Users {
     }
 
     public void setRola(Roles rola) {
+
         this.rola = rola;
 
     }
@@ -112,7 +114,7 @@ public class Users {
     }
 
     public void setRolaDisp(String rolaDisp) {
-        rolaDisp = rola.getNazwa();
+
         this.rolaDisp = rolaDisp;
     }
 

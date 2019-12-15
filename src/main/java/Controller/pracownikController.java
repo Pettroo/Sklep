@@ -1,9 +1,13 @@
 package Controller;
 
 import entity.Orders;
+import entity.Orders_positions;
+import entity.Products;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
@@ -25,7 +29,6 @@ public class pracownikController extends GoTo {
     @FXML
     private TextArea text;
     pracownikRepo repo = new pracownikRepo();
-    ObservableList<Orders> data = FXCollections.observableArrayList();
 
     public void initialize() {
         System.out.println(login);
@@ -37,6 +40,7 @@ public class pracownikController extends GoTo {
         TableColumn nazwisko = new TableColumn("Nazwisko");
         TableColumn status = new TableColumn("Status");
         TableColumn zaznacz = new TableColumn("Zaznacz");
+        numer.setSortType(TableColumn.SortType.ASCENDING);
 
         numer.setCellValueFactory(new PropertyValueFactory<Orders, String>("id"));
         datA.setCellValueFactory(new PropertyValueFactory<Orders, String>("data"));
@@ -46,31 +50,44 @@ public class pracownikController extends GoTo {
         nazwisko.setCellValueFactory(new PropertyValueFactory<Orders, String>("nazwisko"));
         zaznacz.setCellValueFactory(new PropertyValueFactory<Orders, CheckBox>("zaznacz"));
         T_zamowienia.getColumns().addAll(numer, datA, login, imie, nazwisko, status, zaznacz);
+        T_zamowienia.getSortOrder().setAll(numer);
 
-        data.addAll(repo.getAllOrders());
-        T_zamowienia.setItems(data);
+        tab_zamowienia();
     }
 
+    public void tab_zamowienia() {
+        ObservableList<Orders> data = FXCollections.observableArrayList();
+
+        data.addAll(repo.getAllOrders());
+        SortedList<Orders> sortedData = new SortedList<>(data);
+        sortedData.comparatorProperty().bind(T_zamowienia.comparatorProperty());
+        T_zamowienia.setItems(sortedData);
+
+    }
 
     public void wyloguj(ActionEvent actionEvent) {
         goTo(actionEvent, "/FXML/logowanie.fxml");
     }
 
     public void anulowanie(ActionEvent actionEvent) {
-        for (Orders z : data) {
+        for (Orders z : (List<Orders>) T_zamowienia.getItems()) {
             if (z.getZaznacz().isSelected()) {
-                z.setStatus("Anulowane");
+                //   z.setStatus("Anulowane");
+                repo.setOrderStatus(z.getId(), "Anulowane");
             }
         }
+        tab_zamowienia();
         T_zamowienia.refresh();
     }
 
     public void zrealizowane(ActionEvent actionEvent) {
-        for (Orders z : data) {
+        for (Orders z : (List<Orders>) T_zamowienia.getItems()) {
             if (z.getZaznacz().isSelected()) {
-                z.setStatus("Zrealizowane");
+                // z.setStatus("Zrealizowane");
+                repo.setOrderStatus(z.getId(), "Zrealizowane");
             }
         }
+        tab_zamowienia();
         T_zamowienia.refresh();
     }
 
@@ -79,19 +96,16 @@ public class pracownikController extends GoTo {
         String s = "";
         if (o != null) {
 
-            //   for(Orders_positions p: o.getPozycje()){
-            //        s+=(p.toString());
-            //        s+="d";
-            //   }
-            // nie działa bo nie ma połaczenia z order do order_positions
+            List<Orders_positions> lista = repo.getOrderPositions(o.getId());
+            for (Orders_positions pos : lista) {
+
+                s += repo.getProduct(pos.getProduktId()).getName() + "  Cena: " + pos.getCena() + "  Ilość: " + pos.getIlosc() + "\n";
+            }
+
 
             text.setText(s);
 
         }
-    }
-
-    public String getLogin() {
-        return login;
     }
 
     public void setLogin(String login) {

@@ -38,9 +38,17 @@ public class Orders_positions {
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders order;
-    @ManyToOne
-    @PrimaryKeyJoinColumn(name = "product_id", referencedColumnName = "id")
-    private Products produkt;
+//    @ManyToOne
+//    @PrimaryKeyJoinColumn(name = "product_id", referencedColumnName = "id")
+//    private Products produkt;
+//
+//    public Products getProdukt() {
+//        return produkt;
+//    }
+//
+//    public void setProdukt(Products produkt) {
+//        this.produkt = produkt;
+//    }
 
 
     public int getId() {
@@ -59,13 +67,6 @@ public class Orders_positions {
         this.order = order;
     }
 
-    public Products getProdukt() {
-        return produkt;
-    }
-
-    public void setProdukt(Products produkt) {
-        this.produkt = produkt;
-    }
 
     public Integer getIlosc() {
         return ilosc;
@@ -83,14 +84,5 @@ public class Orders_positions {
         this.cena = cena;
     }
 
-    @Override
-    public String toString() {
-        return "Orders_positions{" +
-                "id=" + id +
-                ", order=" + order +
-                ", produkt=" + produkt +
-                ", ilosc=" + ilosc +
-                ", cena=" + cena +
-                '}';
-    }
+
 }

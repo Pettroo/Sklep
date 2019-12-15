@@ -26,18 +26,18 @@ public class Products {
     @PrimaryKeyJoinColumn(name = "shoe_id", referencedColumnName = "id")
     private Shoes shoe;
 
-/*
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "produkt")
-    private Set<Orders_positions> lista;
 
-    public Set<Orders_positions> getLista() {
-        return lista;
-    }
+//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "produkt")
+//    private Set<Orders_positions> lista;
+//
+//    public Set<Orders_positions> getLista() {
+//        return lista;
+//    }
+//
+//    public void setLista(Set<Orders_positions> lista) {
+//        this.lista = lista;
+//    }
 
-    public void setLista(Set<Orders_positions> lista) {
-        this.lista = lista;
-    }
-*/
 
 
     public int getShoe_id() {
