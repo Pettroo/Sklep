@@ -20,6 +20,8 @@ public class GoTo {
         }
         Scene actual_scene = new Scene(pane);
         Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        app_stage.setTitle("Sklep Bucior");
         app_stage.setScene(actual_scene);
     }
 

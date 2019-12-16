@@ -65,7 +65,9 @@ public class Shoes {
 
         this.ilosc = new Spinner(1, 100, 1);
         this.rozmiar = new ComboBox(options);
-        this.zaznacz = new CheckBox();    }
+        this.zaznacz = new CheckBox();
+    }
+
 
     public Set<Products> getRozmiary() {
         return rozmiary;

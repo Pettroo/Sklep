@@ -3,9 +3,11 @@ package Controller;
 import entity.Users;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class logowanieController extends GoTo {
     private logowanieRepo repo = new logowanieRepo();
@@ -26,9 +28,12 @@ public class logowanieController extends GoTo {
             alert.setTitle("");
             alert.setContentText("Puste pola login lub hasło");
             alert.showAndWait();
+           return;
         }
         for (Users u : repo.getAllUsers()) {
             if (nazwaU.getText().equals(u.getLogin()) && password.getText().equals(u.getHaslo())) {
+                Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                app_stage.setTitle(nazwaU.getText());
                 if (u.getRola().getKod().equals("MANAGER"))
                     goToManager(actionEvent, "/FXML/manager.fxml", u.getLogin());
                 if (u.getRola().getKod().equals("USER"))

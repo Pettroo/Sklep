@@ -19,6 +19,7 @@ public class rejestracjaController extends GoTo {
     private TextField imie;
     @FXML
     private TextField nazwisko;
+    private rejestracjaRepo repo = new rejestracjaRepo();
 
     public void utworz(ActionEvent actionEvent) {
 
@@ -40,6 +41,7 @@ public class rejestracjaController extends GoTo {
             alert.setTitle("Utworzenie konta");
             alert.setContentText("Konto: " + nazwaU.getText() + "  zostało utworzone");
             alert.showAndWait();
+            repo.addUser(nazwaU.getText(), password1.getText(), imie.getText(), nazwisko.getText());
             goTo(actionEvent, "/FXML/logowanie.fxml");
         }
     }

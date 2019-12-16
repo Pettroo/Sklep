@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.Pane?>
@@ -19,7 +18,7 @@
                         <TableView fx:id="T_produkty" prefHeight="384.0" prefWidth="900.0">
 
                         </TableView>
-                        <Button layoutX="157.0" layoutY="382.0" mnemonicParsing="false" onAction="#dodaj_do_koszyka" text="Do koszyka" />
+                        <Button layoutX="187.0" layoutY="388.0" mnemonicParsing="false" onAction="#dodaj_do_koszyka" text="Do koszyka" />
                      </children>
                   </Pane>
                </content>

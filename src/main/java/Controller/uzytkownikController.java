@@ -26,6 +26,7 @@ public class uzytkownikController extends GoTo {
     @FXML
     private TextArea text;
     private uzytkownikRepo repo = new uzytkownikRepo();
+    ObservableList<Shoes> dataKoszyk = FXCollections.observableArrayList();
 
     public void initialize() {
         System.out.println(login);
@@ -65,38 +66,26 @@ public class uzytkownikController extends GoTo {
     }
 
     public void zamow(ActionEvent actionEvent) {
-//        for (Products p : (List<Products>) T_produkty.getItems()) {
-//            if (p.getZaznacz().isSelected()) {
-//                z.setStatus("Anulowane");
-//                repo.setOrderStatus(z);
-//            }
-//
-//        }
 
-        //  Produkty p = (Produkty) T_koszyk.getSelectionModel().getSelectedItem();
-        //  System.out.println(p.getCena());
-        for (Shoes z : (List<Shoes>) T_produkty.getItems()) {
-            if (z.getZaznacz().isSelected()) {
-                //   z.setStatus("Anulowane");
-                //   data.add(z);
-            }
-        }
+        repo.addOrder(repo.getUser(login).getId());
+
+
+
+
+
 
 
     }
 
     public void dodaj_do_koszyka(ActionEvent actionEvent) {
-        ObservableList<Shoes> data = FXCollections.observableArrayList();
 
         for (Shoes z : (List<Shoes>) T_produkty.getItems()) {
             if (z.getZaznacz().isSelected()) {
-
-                data.add(z);
+                z.getZaznacz().setSelected(false);
+                dataKoszyk.add(z);
             }
         }
-
-        T_koszyk.setItems(data);
-
+        T_koszyk.setItems(dataKoszyk);
     }
 
     public void usun(ActionEvent actionEvent) {
@@ -105,14 +94,16 @@ public class uzytkownikController extends GoTo {
         alert.setTitle("Usuwanie");
         alert.setContentText("Wybrane artykóły zostały usunięte");
         alert.showAndWait();
-        for (Shoes z : (List<Shoes>) T_produkty.getItems()) {
-            if (z.getZaznacz().isSelected()) {
-                T_koszyk.getItems().remove(z);
+        dataKoszyk = FXCollections.observableArrayList();
+
+        for (Shoes z : (List<Shoes>) T_koszyk.getItems()) {
+            if (!z.getZaznacz().isSelected()) {
+                dataKoszyk.add(z);
             }
         }
-        T_koszyk.refresh();
+        T_koszyk.setItems(dataKoszyk);
         tab_oferta(actionEvent);
-        T_produkty.refresh();
+
     }
 
     public void szczegoly(ActionEvent actionEvent) {
@@ -125,13 +116,11 @@ public class uzytkownikController extends GoTo {
                 s += repo.getProduct(pos.getProduktId()).getName() + "  Cena: " + pos.getCena() + "  Ilość: " + pos.getIlosc() + "\n";
             }
             text.setText(s);
-
         }
     }
 
     public void wyloguj(ActionEvent actionEvent) {
         goTo(actionEvent, "/FXML/logowanie.fxml");
-
     }
 
     public void tab_oferta(Event event) {
@@ -141,7 +130,6 @@ public class uzytkownikController extends GoTo {
     }
 
     public void tab_koszyk(Event event) {
-
     }
 
     public void tab_zamowienia(Event event) {
