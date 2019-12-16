@@ -27,11 +27,7 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.5</version>
         </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-maven-plugin</artifactId>
-            <version>3.2.2</version>
-        </dependency>
+
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
@@ -54,14 +50,16 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
             <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.2.2</version>
-                <configuration>
-                    <changeLogFile>src/main/resources/Liquibase/db-changelog.xml</changeLogFile>
-                    <propertyFile>src/main/resources/Liquibase/jdbc.properties</propertyFile>
-                </configuration>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <version>6.1.2</version>
+            <configuration>
+                <url>jdbc:postgresql://localhost:5432/post</url>
+                <user>postgres</user>
+                <password>password</password>
+            </configuration>
             </plugin>
 
         </plugins>
