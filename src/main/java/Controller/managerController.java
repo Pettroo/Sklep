@@ -34,7 +34,6 @@ public class managerController extends GoTo {
 
 
     public void initialize() {
-        System.out.println(login);
 
         //Tabela pracowników
         TableColumn imie = new TableColumn("Imię");

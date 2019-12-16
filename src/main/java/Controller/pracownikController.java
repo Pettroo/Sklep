@@ -31,7 +31,6 @@ public class pracownikController extends GoTo {
     pracownikRepo repo = new pracownikRepo();
 
     public void initialize() {
-        System.out.println(login);
 
         TableColumn numer = new TableColumn("Numer zamówienia");
         TableColumn datA = new TableColumn("Data");

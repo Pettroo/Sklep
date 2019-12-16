@@ -29,7 +29,6 @@ public class uzytkownikController extends GoTo {
     ObservableList<Shoes> dataKoszyk = FXCollections.observableArrayList();
 
     public void initialize() {
-        System.out.println(login);
 
         //table produkty
         TableColumn name = new TableColumn("Nazwa");
