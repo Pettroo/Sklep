@@ -27,19 +27,19 @@ public class Shoes {
 
 
     @Transient
-    private Spinner ilosc;
+    private Spinner<Integer> ilosc;
     @Transient
     private ComboBox rozmiar;
     @Transient
     private CheckBox zaznacz;
 
-
-    public Spinner getIlosc() {
-        return ilosc;
+    public void setIlosc(Spinner<Integer> ilosc) {
+        this.ilosc = ilosc;
     }
 
-    public void setIlosc(Spinner ilosc) {
-        this.ilosc = ilosc;
+
+    public Spinner<Integer> getIlosc() {
+        return ilosc;
     }
 
     public ComboBox getRozmiar() {
@@ -63,10 +63,12 @@ public class Shoes {
     public Shoes() {
         ObservableList<String> options = FXCollections.observableArrayList("36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48");
 
-        this.ilosc = new Spinner(1, 100, 1);
+        this.ilosc = new Spinner<Integer>(1, 100, 1);
         this.rozmiar = new ComboBox(options);
-        this.zaznacz = new CheckBox();
-    }
+        this.zaznacz = new CheckBox();    }
+
+
+
 
 
     public Set<Products> getRozmiary() {

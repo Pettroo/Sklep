@@ -66,14 +66,38 @@ public class uzytkownikController extends GoTo {
     }
 
     public void zamow(ActionEvent actionEvent) {
+        int flag = 0;
 
-        repo.addOrder(repo.getUser(login).getId());
+        for (Shoes z : (List<Shoes>) T_koszyk.getItems()) {
+            if (z.getZaznacz().isSelected()) flag++;
+        }
+        if (flag == 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("Błąd");
+            alert.setContentText("Musisz wybrać przynajmniej jeden artykół by złożyć zamówienie");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("Zamówienie");
+            alert.setContentText("Zamówienie na wybrane produkty zostało złożone");
+            alert.showAndWait();
 
+            int order_id = repo.addOrder(repo.getUser(login).getId());
 
+            for (Shoes z : (List<Shoes>) T_koszyk.getItems()) {
+                if (z.getZaznacz().isSelected()) {
+                    List<Products> list = repo.getProductFromShoe(z.getId());
+                    for (Products p : list) {
+                        if (p.getSize().equals((String) z.getRozmiar().getSelectionModel().getSelectedItem())) {
+                            repo.addOrderPosition(order_id, p.getId(), z.getIlosc().getValue());
+                        }
+                    }
 
-
-
-
+                }
+            }
+        }
 
     }
 
@@ -113,7 +137,7 @@ public class uzytkownikController extends GoTo {
             List<Orders_positions> lista = repo.getOrderPositions(z.getId());
             for (Orders_positions pos : lista) {
 
-                s += repo.getProduct(pos.getProduktId()).getName() + "  Cena: " + pos.getCena() + "  Ilość: " + pos.getIlosc() + "\n";
+                s += repo.getProduct(pos.getProduktId()).getName() + "  Cena: " + pos.getCena() + "  Rozmiar: " + repo.getProduct(pos.getProduktId()).getSize() + "  Ilość: " + pos.getIlosc() + "\n";
             }
             text.setText(s);
         }

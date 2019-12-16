@@ -99,12 +99,9 @@ public class pracownikController extends GoTo {
             List<Orders_positions> lista = repo.getOrderPositions(o.getId());
             for (Orders_positions pos : lista) {
 
-                s += repo.getProduct(pos.getProduktId()).getName() + "  Cena: " + pos.getCena() + "  Ilość: " + pos.getIlosc() + "\n";
+                s += repo.getProduct(pos.getProduktId()).getName() + "  Cena: " + pos.getCena() + "  Rozmiar: " + repo.getProduct(pos.getProduktId()).getSize() + "  Ilość: " + pos.getIlosc() + "\n";
             }
-
-
             text.setText(s);
-
         }
     }
 

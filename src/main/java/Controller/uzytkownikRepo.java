@@ -8,9 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 
@@ -21,12 +19,6 @@ public class uzytkownikRepo {
     public List<Shoes> getAllShoes() {
         EntityManager em = fabryka.createEntityManager();
         List<Shoes> l = em.createQuery("SELECT p FROM Shoes p", Shoes.class).getResultList();
-        return l;
-    }
-
-    public List<Orders> getAllOrders() {
-        EntityManager em = fabryka.createEntityManager();
-        List<Orders> l = em.createQuery("SELECT p FROM Orders p", Orders.class).getResultList();
         return l;
     }
 
@@ -45,25 +37,34 @@ public class uzytkownikRepo {
         Products l = em.createQuery("SELECT p FROM Products p WHERE id=" + id, Products.class).getSingleResult();
         return l;
     }
+
+    public List<Products> getProductFromShoe(int shoe_id) {
+        EntityManager em = fabryka.createEntityManager();
+        List<Products> l = em.createQuery("SELECT p FROM Products p WHERE shoe_id=" + shoe_id , Products.class).getResultList();
+        return l;
+    }
     public List<Orders_positions> getOrderPositions(int id) {
         EntityManager em = fabryka.createEntityManager();
         List<Orders_positions> l = em.createQuery("SELECT p FROM Orders_positions p WHERE order_id=" + id, Orders_positions.class).getResultList();
         return l;
     }
-    public void addOrder(int id){
+    public int addOrder(int id){
         EntityManager em = fabryka.createEntityManager();
 
         Session sesion = (Session) em.getDelegate();
         Connection con = ((SessionImpl) sesion).connection();
-        PreparedStatement callableStatement = null;
+        CallableStatement callableStatement = null;
         try {
-            callableStatement = con.prepareStatement("CALL s_orders.add_order(?)");
-            callableStatement.setInt(1, id);
+            callableStatement = con.prepareCall("{? = call s_orders.add_order(?)}");
+            callableStatement.registerOutParameter(1, Types.INTEGER);
+            callableStatement.setInt(2, id);
             callableStatement.execute();
             con.commit();
+            return callableStatement.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return 0;
     }
     public void addOrderPosition(int order_id,int product_id,int quantity){
         EntityManager em = fabryka.createEntityManager();
